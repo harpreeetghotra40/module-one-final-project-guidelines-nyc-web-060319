@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20190617210917) do
     t.string "name"
   end
 
-  create_table "playlist", force: :cascade do |t|
+  create_table "playlists", force: :cascade do |t|
     t.string "name"
     t.string "description"
   end
