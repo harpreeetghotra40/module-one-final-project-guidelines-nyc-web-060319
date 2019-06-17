@@ -1,0 +1,53 @@
+#it has the name and then desc
+p1 = Playlist.new("Chill", "When in doubt chill out.")
+p2 = Playlist.new("One for the rainy day", "Listen to the ryhtem of the falling rain")
+p3 = Playlist.new("Summer Days", "Summer is a state of mind")
+p4 = Playlist.new("School of Rock", "Its a long way to the top, if you want to Rock and Roll")
+
+# just the name
+g1 = Genre.new("Pop")
+g2 = Genre.new("Rap")
+g3 = Genre.new("Rock")
+g4 = Genre.new("HipHop")
+
+a1 = Artist.new("Taylor Swift")
+a2 = Artist.new("Queen")
+a3 = Artist.new("Maroon 5")
+a4 = Artist.new("Eminem")
+a5 = Artist.new("Journey")
+a6 = Artist.new("Alanis Morisette")
+a7 = Artist.new("AC/DC")
+a8 = Artist.new("Beatles")
+
+# songs have a title then artist and then genre
+s1 = Song.new("Blank Space", a1, g1)
+s2 = Song.new("Ironic", a6, g1)
+s3 = Song.new("Sugar", a3, g1)
+s4 = Song.new("Payphone", a3, g1)
+s5 = Song.new("One More Night", a3, g1)
+
+s6 = Song.new("Back in Black", a7, g3)
+s7 = Song.new("Don't stop Believin'", a5, g3)
+s8 = Song.new("Bohemian Raphsody", a2, g3)
+s9 = Song.new("Hey Jude", a8, g3)
+
+s10 = Song.new("Mockingbird", a4, g2)
+s11 = Song.new("Not afraid", a4, g2)
+s12 = Song.new("The real slim shady", a4, g2)
+s13 = Song.new("Till I collapse", a4, g2)
+s14 = Song.new("Without me", a4, g2)
+
+sp1 = Song_in_Playlist.new(p1, s1)
+sp2 = Song_in_Playlist.new(p2, s2)
+sp3 = Song_in_Playlist.new(p2, s3)
+sp4 = Song_in_Playlist.new(p2, s4)
+sp5 = Song_in_Playlist.new(p2, s5)
+sp6 = Song_in_Playlist.new(p3, s6)
+sp7 = Song_in_Playlist.new(p3, s7)
+sp8 = Song_in_Playlist.new(p3, s8)
+sp9 = Song_in_Playlist.new(p3, s9)
+sp10 = Song_in_Playlist.new(p4, s10)
+sp11 = Song_in_Playlist.new(p4, s11)
+sp12 = Song_in_Playlist.new(p4, s12)
+sp13 = Song_in_Playlist.new(p4, s13)
+sp14 = Song_in_Playlist.new(p4, s14)
