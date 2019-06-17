@@ -1,8 +1,8 @@
 class CreateSongsInPlaylists < ActiveRecord::Migration[5.0]
   def change
-    create_table :songs_in_playlists do |table|
-      table.integer :playlist_id
-      table.integer :song_id
+    create_table :song_in_playlists do |table|
+      table.text :playlist_id
+      table.text :song_id
     end
   end
 end
