@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20190617210917) do
   end
 
   create_table "song_in_playlists", force: :cascade do |t|
-    t.text "playlist_id"
-    t.text "song_id"
+    t.integer "playlist_id"
+    t.integer "song_id"
   end
 
   create_table "songs", force: :cascade do |t|
