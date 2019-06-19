@@ -6,9 +6,33 @@ class Playlist < ActiveRecord::Base
     playlist_name = gets.chomp
     puts "Enter playlist description for #{playlist_name}"
     playlist_desc = gets.chomp
-    new_playlist = Playlist.find_or_create_by(name: playlist_name, description: playlist_desc)
+    if Playlist.find_by(name: playlist_name) == nil
+      new_playlist = Playlist.create(name: playlist_name, description: playlist_desc)
+      puts "Would you like to add songs to #{new_playlist.name} | Yes | | No |"
+      input = gets.chomp.downcase
+      if input == 'yes'
+        Song_In_Playlist.add_songs_to_playlist(new_playlist)
+      else
+        welcome
+      end
+    end
     print_playlists
     welcome
+  end
+
+  def self.delete_playlist
+    puts "Enter the name of the playlist you want to delete."
+    input = gets.chomp
+    if Playlist.find_by(name: input) == nil
+      puts "-------------Invalid input. Try Again"
+      welcome
+    else
+      required_playlist = Playlist.find_by(name: input)
+      Playlist.delete(required_playlist.id)
+      puts "The playlist was successfully deleted"
+      welcome
+    end
+
   end
 
   def self.view_playlists

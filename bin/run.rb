@@ -11,7 +11,7 @@ end
 
 def welcome
   puts "----------------------------------------------------------------"
-  puts "|Create||View||Edit|"
+  puts "|Create||View||Edit||Delete|"
   puts "\n"
   input = gets.chomp.downcase
   if input == "create"
@@ -20,6 +20,8 @@ def welcome
     Playlist.view_playlists
   elsif input == "edit"
     Song_In_Playlist.edit_playlist
+  elsif input == "delete"
+    Playlist.delete_playlist
   else
     welcome
   end
