@@ -27,6 +27,12 @@ class Song_In_Playlist < ActiveRecord::Base
     Playlist.print_playlists
     required_playlist = gets.chomp
     required_playlist = Playlist.find_by(name: required_playlist)
+    if required_playlist == nil
+      puts "----------------------------------------"
+      puts "The playlist does not exist. Try again"
+      puts "----------------------------------------"
+      edit_playlist
+    end
     puts "\n"
     puts "How would you like to edit? add||delete  from playlist?"
     input = gets.chomp.downcase
@@ -40,8 +46,22 @@ class Song_In_Playlist < ActiveRecord::Base
   def self.add_songs_to_playlist(playlist)
     puts "Which song would you like to add?"
     Song.print_all
+    puts "Add a song you don't see? Type: create song"
     input = gets.chomp
+    if input == "create song"
+      input = Song.add_song
+    end
     song_name = Song.find_by(title: input)
+    if song_name == nil
+      puts "Huh? That song doesn't exists in our database, would you like to create a new song?"
+      puts "Yes || No"
+      input = gets.chomp.downcase
+      if input == 'yes'
+      song_name = Song.add_song
+      else
+        add_songs_to_playlist(playlist)
+      end
+    end
     Song_In_Playlist.find_or_create_by(playlist_id: playlist.id, song_id: song_name.id) 
     puts "Your song has been successfully added!"
     puts "Would you like to add another song? |Yes|No|" 
@@ -54,14 +74,12 @@ class Song_In_Playlist < ActiveRecord::Base
   end
 
   def self.delete_song_from_playlist(playlist)
-    iterator = 1
     Song_In_Playlist.all.each do |song|
       if song.playlist_id == Playlist.find_by(name: playlist.name).id
-        puts "#{iterator}." + Song.find_by(id: song.song_id).title
-        iterator += 1
+        puts "." + Song.find_by(id: song.song_id).title
       end
     end
-    if iterator == 1
+    if Playlist.find_by(name: playlist.name).all.length == 0
       puts "The Playlist is empty."
       welcome
     end

@@ -6,12 +6,12 @@ ActiveRecord::Base.logger = nil
 
 def welcome_message
   puts "----------------------------------------------------------------"
-  puts "Welcome to our app. You can: View playlists or Create one ..."
+  puts "Welcome to our app. Please select from the options below ..."
 end
 
 def welcome
   puts "----------------------------------------------------------------"
-  puts "|Create||View||Edit||Delete|"
+  puts "|Create||View||Edit||Delete|-------- |exit|"
   puts "\n"
   input = gets.chomp.downcase
   if input == "create"
@@ -22,6 +22,8 @@ def welcome
     Song_In_Playlist.edit_playlist
   elsif input == "delete"
     Playlist.delete_playlist
+  elsif input == 'exit'
+      exit(0)
   else
     welcome
   end
