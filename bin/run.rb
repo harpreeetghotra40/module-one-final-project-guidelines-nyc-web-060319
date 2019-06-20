@@ -11,9 +11,14 @@ end
 
 def welcome
   puts "----------------------------------------------------------------"
-  puts "|Create||View||Edit||Delete|-------- |exit|"
-  puts "\n"
-  input = gets.chomp.downcase
+  prompt = TTY::Prompt.new
+  input = prompt.select("") do |menu_items|
+    menu_items.choice "1. Create a new playlist", "create"
+    menu_items.choice "2. View a playlist", "view"
+    menu_items.choice "3. Edit a existing playlist", "edit"
+    menu_items.choice "4. Delete a existing playlist", "delete"
+    menu_items.choice "5. Exit program", "exit"
+  end
   if input == "create"
     Playlist.create_playlist
   elsif input == "view"
@@ -22,8 +27,8 @@ def welcome
     Song_In_Playlist.edit_playlist
   elsif input == "delete"
     Playlist.delete_playlist
-  elsif input == 'exit'
-      exit(0)
+  elsif input == "exit"
+    exit(0)
   else
     welcome
   end

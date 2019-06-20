@@ -8,9 +8,12 @@ class Playlist < ActiveRecord::Base
     playlist_desc = gets.chomp
     if Playlist.find_by(name: playlist_name) == nil
       new_playlist = Playlist.create(name: playlist_name, description: playlist_desc)
-      puts "Would you like to add songs to #{new_playlist.name} | Yes | | No |"
-      input = gets.chomp.downcase
-      if input == 'yes'
+      prompt = TTY::Prompt.new
+      input = prompt.select("Would you like to add songs to #{new_playlist.name}") do |menu_items|
+        menu_items.choice "1. Yes", "yes"
+        menu_items.choice "2. No", "no"
+      end
+      if input == "yes"
         Song_In_Playlist.add_songs_to_playlist(new_playlist)
       else
         welcome
@@ -21,24 +24,32 @@ class Playlist < ActiveRecord::Base
   end
 
   def self.delete_playlist
-    puts "Enter the name of the playlist you want to delete."
-    input = gets.chomp
+    prompt = TTY::Prompt.new
+    input = prompt.select("Select the playlist you want to delete.") do |menu_items|
+      Playlist.all.each_with_index do |menu_item, index|
+        menu_items.choice "#{index + 1}. #{menu_item.name}", menu_item.name
+      end
+    end
     if Playlist.find_by(name: input) == nil
-      puts "-------------Invalid input. Try Again"
+      puts "-----Invalid input. Try Again--------"
       welcome
     else
       required_playlist = Playlist.find_by(name: input)
       Playlist.delete(required_playlist.id)
+      puts "-------------------------------------"
       puts "The playlist was successfully deleted"
+      puts "-------------------------------------"
       welcome
     end
-
   end
 
   def self.view_playlists
-    Playlist.print_playlists
-    puts "Which playlist would you like to view?\n"
-    required_playlist = gets.chomp
+    prompt = TTY::Prompt.new
+    required_playlist = prompt.select("Which playlist would you like to view?\n") do |menu_items|
+      Playlist.all.each_with_index do |menu_item, index|
+        menu_items.choice "#{index + 1}. #{menu_item.name}", menu_item.name
+      end
+    end
     Song_In_Playlist.view_playlist(required_playlist)
   end
 
