@@ -3,6 +3,7 @@ class Song_In_Playlist < ActiveRecord::Base
   belongs_to :song
 
   def self.view_playlist(required_playlist)
+    system "clear"
     puts "------------------------------------------"
     if Playlist.find_by(name: required_playlist) == nil
       puts "Invaild input, please try again."
@@ -14,7 +15,7 @@ class Song_In_Playlist < ActiveRecord::Base
     puts ""
     Song_In_Playlist.all.each do |song|
       if song.playlist_id == Playlist.find_by(name: required_playlist).id
-        puts "#{iterator}." + Song.find_by(id: song.song_id).title
+        puts "#{iterator}. #{Song.find_by(id: song.song_id).title}".yellow
         iterator += 1
       end
     end
@@ -50,9 +51,10 @@ class Song_In_Playlist < ActiveRecord::Base
   end
 
   def self.add_songs_to_playlist(playlist)
+    system "clear"
     puts "----------------------------------"
     prompt = TTY::Prompt.new
-    required_genre = prompt.select("What genre do you like?") do |menu_items|
+    required_genre = prompt.select("What genre do you like?", per_page: 10) do |menu_items|
       Genre.all.each_with_index do |menu_item, index|
         menu_items.choice "#{index + 1}. #{menu_item.name}", menu_item.name
       end

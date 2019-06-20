@@ -5,6 +5,7 @@ require_relative "../lib/playlist.rb"
 ActiveRecord::Base.logger = nil
 
 def welcome_message
+  system "clear"
   puts "----------------------------------------------------------------"
   puts "Welcome to our app. Please select from the options below ..."
 end

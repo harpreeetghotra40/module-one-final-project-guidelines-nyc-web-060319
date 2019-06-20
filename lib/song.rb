@@ -1,7 +1,7 @@
 class Song < ActiveRecord::Base
   belongs_to :genre
   belongs_to :artist
-  has_many :playlists, through: :song_in_playlist
+  has_many :playlists, through: :song_in_playlists
 
   def self.print_all
     Song.all.each_with_index do |song|

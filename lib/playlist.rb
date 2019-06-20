@@ -61,7 +61,7 @@ class Playlist < ActiveRecord::Base
 
   def self.print_playlists
     Playlist.all.each_with_index do |playlist, index|
-      puts "#{index + 1} #{playlist.name}"
+      puts "#{index + 1} #{playlist.name}".yellow
     end
   end
 end
