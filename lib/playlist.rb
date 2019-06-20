@@ -52,7 +52,7 @@ class Playlist < ActiveRecord::Base
 
   def self.view_playlists
     prompt = TTY::Prompt.new
-    required_playlist = prompt.select("Which playlist would you like to view?\n") do |menu_items|
+    required_playlist = prompt.select("Which playlist would you like to view?\n", per_page: 10) do |menu_items|
       Playlist.all.each_with_index do |menu_item, index|
         menu_items.choice "#{index + 1}. #{menu_item.name}", menu_item.name
       end
