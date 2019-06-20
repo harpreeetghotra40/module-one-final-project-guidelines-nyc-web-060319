@@ -8,17 +8,24 @@ class Song < ActiveRecord::Base
       puts ". #{song.title}"
     end
   end
-  
-  def self.add_song
-  puts "What is the name of the song you would like to add?"
-  song_name = gets.chomp
-  puts "What is the name of the artist?"
-  artist_name = gets.chomp
-  puts "What genre does this belong to?"
-  Genre.print_all
-  genre_name = gets.chomp
-  newSong = Song.create(title: song_name,artist: Artist.add_artist(artist_name),genre: Genre.add_genre(genre_name))
-  return newSong
+
+  def self.print_songs_by_genre(required_genre)
+    Song.all.each do |song|
+      if (song.genre_id == required_genre.id)
+        puts "#{song.title}"
+      end
+    end
   end
 
+  def self.add_song
+    puts "What is the name of the song you would like to add?"
+    song_name = gets.chomp
+    puts "What is the name of the artist?"
+    artist_name = gets.chomp
+    puts "What genre does this belong to?"
+    Genre.print_all
+    genre_name = gets.chomp
+    newSong = Song.create(title: song_name, artist: Artist.add_artist(artist_name), genre: Genre.add_genre(genre_name))
+    return newSong
+  end
 end

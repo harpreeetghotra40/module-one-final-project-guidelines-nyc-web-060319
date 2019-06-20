@@ -44,8 +44,16 @@ class Song_In_Playlist < ActiveRecord::Base
   end
 
   def self.add_songs_to_playlist(playlist)
-    puts "Which song would you like to add?"
-    Song.print_all
+    puts "----------------------------------"
+    Genre.print_all
+    puts "What genre do you like?"
+    required_genre = gets.chomp
+    required_genre = Genre.find_by(name: required_genre)
+    if required_genre == nil
+      puts "----------Invalid Input. Try again------------"
+      add_songs_to_playlist(playlist)
+    end
+    Song.print_songs_by_genre(required_genre)
     puts "Add a song you don't see? Type: create song"
     input = gets.chomp
     if input == "create song"
@@ -56,15 +64,15 @@ class Song_In_Playlist < ActiveRecord::Base
       puts "Huh? That song doesn't exists in our database, would you like to create a new song?"
       puts "Yes || No"
       input = gets.chomp.downcase
-      if input == 'yes'
-      song_name = Song.add_song
+      if input == "yes"
+        song_name = Song.add_song
       else
         add_songs_to_playlist(playlist)
       end
     end
-    Song_In_Playlist.find_or_create_by(playlist_id: playlist.id, song_id: song_name.id) 
+    Song_In_Playlist.find_or_create_by(playlist_id: playlist.id, song_id: song_name.id)
     puts "Your song has been successfully added!"
-    puts "Would you like to add another song? |Yes|No|" 
+    puts "Would you like to add another song? |Yes|No|"
     input = gets.chomp.downcase
     if input == "yes"
       add_songs_to_playlist(playlist)
@@ -93,7 +101,6 @@ class Song_In_Playlist < ActiveRecord::Base
     row_name = Song_In_Playlist.find_by(song_id: song_name.id)
     Song_In_Playlist.delete(row_name.id)
     puts "The song was successfully deleted.."
-    view_playlist(playlist.name) 
+    view_playlist(playlist.name)
   end
 end
-

@@ -1,53 +1,6 @@
-#it has the name and then desc
-p1 = Playlist.create(name: "Chill", description: "When in doubt chill out.")
-p2 = Playlist.create(name: "One for the rainy day", description: "Listen to the ryhtem of the falling rain")
-p3 = Playlist.create(name: "Summer Days", description: "Summer is a state of mind")
-p4 = Playlist.create(name: "School of Rock", description: "Its a long way to the top, if you want to Rock and Roll")
-
-# just the name
-g1 = Genre.create(name: "Pop")
-g2 = Genre.create(name: "Rap")
-g3 = Genre.create(name: "Rock")
-g4 = Genre.create(name: "HipHop")
-
-a1 = Artist.create(name: "Taylor Swift")
-a2 = Artist.create(name: "Queen")
-a3 = Artist.create(name: "Maroon 5")
-a4 = Artist.create(name: "Eminem")
-a5 = Artist.create(name: "Journey")
-a6 = Artist.create(name: "Alanis Morisette")
-a7 = Artist.create(name: "AC/DC")
-a8 = Artist.create(name: "Beatles")
-
 # songs have a title then artist and then genre
-s1 = Song.create(title: "Blank Space", artist: a1, genre: g1)
-s2 = Song.create(title: "Ironic", artist: a6, genre: g1)
-s3 = Song.create(title: "Sugar", artist: a3, genre: g1)
-s4 = Song.create(title: "Payphone", artist: a3, genre: g1)
-s5 = Song.create(title: "One More Night", artist: a3, genre: g1)
-
-s6 = Song.create(title: "Back in Black", artist: a7, genre: g3)
-s7 = Song.create(title: "Don't stop Believin'", artist: a5, genre: g3)
-s8 = Song.create(title: "Bohemian Raphsody", artist: a2, genre: g3)
-s9 = Song.create(title: "Hey Jude", artist: a8, genre: g3)
-
-s10 = Song.create(title: "Mockingbird", artist: a4, genre: g2)
-s11 = Song.create(title: "Not afraid", artist: a4, genre: g2)
-s12 = Song.create(title: "The real slim shady", artist: a4, genre: g2)
-s13 = Song.create(title: "Till I collapse", artist: a4, genre: g2)
-s14 = Song.create(title: "Without me", artist: a4, genre: g2)
-
-sp1 = Song_In_Playlist.create(playlist_id: p1.id, song_id: s1.id)
-sp2 = Song_In_Playlist.create(playlist_id: p2.id, song_id: s2.id)
-sp3 = Song_In_Playlist.create(playlist_id: p2.id, song_id: s3.id)
-sp4 = Song_In_Playlist.create(playlist_id: p2.id, song_id: s4.id)
-sp5 = Song_In_Playlist.create(playlist_id: p2.id, song_id: s5.id)
-sp6 = Song_In_Playlist.create(playlist_id: p3.id, song_id: s6.id)
-sp7 = Song_In_Playlist.create(playlist_id: p3.id, song_id: s7.id)
-sp8 = Song_In_Playlist.create(playlist_id: p3.id, song_id: s8.id)
-sp9 = Song_In_Playlist.create(playlist_id: p3.id, song_id: s9.id)
-sp10 = Song_In_Playlist.create(playlist_id: p4.id, song_id: s10.id)
-sp11 = Song_In_Playlist.create(playlist_id: p4.id, song_id: s11.id)
-sp12 = Song_In_Playlist.create(playlist_id: p4.id, song_id: s12.id)
-sp13 = Song_In_Playlist.create(playlist_id: p4.id, song_id: s13.id)
-sp14 = Song_In_Playlist.create(playlist_id: p4.id, song_id: s14.id)
+1000.times do
+  a1 = Artist.find_or_create_by(name: Faker::Music.band)
+  g1 = Genre.find_or_create_by(name: Faker::Music.genre)
+  Song.find_or_create_by(title: Faker::Music.album, artist: a1, genre: g1)
+end
