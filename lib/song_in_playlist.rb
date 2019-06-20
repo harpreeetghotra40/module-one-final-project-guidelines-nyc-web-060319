@@ -108,17 +108,22 @@ class Song_In_Playlist < ActiveRecord::Base
   end
 
   def self.delete_song_from_playlist(playlist)
-    Song_In_Playlist.all.each do |song|
-      if song.playlist_id == Playlist.find_by(name: playlist.name).id
-        puts "." + Song.find_by(id: song.song_id).title
+    counter = 0
+    prompt = TTY::Prompt.new
+    input = prompt.select("Which song would you like to delete?") do |menu_items|
+      Song_In_Playlist.all.each do |song|
+        if song.playlist_id == Playlist.find_by(name: playlist.name).id
+          menu_items.choice Song.find_by(id: song.song_id).title
+          counter += 1
+        end
       end
     end
-    if Playlist.find_by(name: playlist.name).all.length == 0
+
+    if counter == 0
       puts "The Playlist is empty."
       welcome
     end
-    puts "Which song would you like to delete?"
-    input = gets.chomp
+
     song_name = Song.find_by(title: input)
     if song_name == nil
       puts "----- Invalid Input. Try Again --------------"

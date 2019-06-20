@@ -45,6 +45,7 @@ class Playlist < ActiveRecord::Base
       puts "-------------------------------------"
       puts "The playlist was successfully deleted"
       puts "-------------------------------------"
+      system "clear"
       welcome
     end
   end
