@@ -9,3 +9,4 @@ gem "rake"
 gem 'rest-client'
 gem 'faker'
 gem 'rspec'
+gem 'tty-prompt'

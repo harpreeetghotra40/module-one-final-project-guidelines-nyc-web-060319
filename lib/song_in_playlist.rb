@@ -23,9 +23,12 @@ class Song_In_Playlist < ActiveRecord::Base
   end
 
   def self.edit_playlist
-    puts "Which playlist would you like to edit?"
-    Playlist.print_playlists
-    required_playlist = gets.chomp
+    prompt = TTY::Prompt.new
+    required_playlist = prompt.select("Which playlist would you like to edit?") do |menu_items|
+      Playlist.all.each_with_index do |menu_item, index|
+        menu_items.choice "#{index + 1}. #{menu_item.name}", menu_item.name
+      end
+    end
     required_playlist = Playlist.find_by(name: required_playlist)
     if required_playlist == nil
       puts "----------------------------------------"
@@ -34,8 +37,11 @@ class Song_In_Playlist < ActiveRecord::Base
       edit_playlist
     end
     puts "\n"
-    puts "How would you like to edit? add||delete  from playlist?"
-    input = gets.chomp.downcase
+    prompt = TTY::Prompt.new
+    input = prompt.select("Which playlist would you like to edit?") do |menu_items|
+      menu_items.choice "Add songs to playlist.", "add"
+      menu_items.choice "Delete songs from playlist.", "delete"
+    end
     if input == "add"
       add_songs_to_playlist(required_playlist)
     elsif input == "delete"
@@ -45,24 +51,38 @@ class Song_In_Playlist < ActiveRecord::Base
 
   def self.add_songs_to_playlist(playlist)
     puts "----------------------------------"
-    Genre.print_all
-    puts "What genre do you like?"
-    required_genre = gets.chomp
+    prompt = TTY::Prompt.new
+    required_genre = prompt.select("What genre do you like?") do |menu_items|
+      Genre.all.each_with_index do |menu_item, index|
+        menu_items.choice "#{index + 1}. #{menu_item.name}", menu_item.name
+      end
+    end
     required_genre = Genre.find_by(name: required_genre)
     if required_genre == nil
       puts "----------Invalid Input. Try again------------"
       add_songs_to_playlist(playlist)
     end
-    Song.print_songs_by_genre(required_genre)
+
+    prompt = TTY::Prompt.new
+    input = prompt.select("Here are a few songs from that genre.") do |menu_items|
+      Song.all.each do |menu_item|
+        if menu_item.genre_id == required_genre.id
+          menu_items.choice "#{menu_item.title}", menu_item.title
+        end
+      end
+    end
     puts "Add a song you don't see? Type: create song"
-    input = gets.chomp
     if input == "create song"
       input = Song.add_song
     end
     song_name = Song.find_by(title: input)
     if song_name == nil
       puts "Huh? That song doesn't exists in our database, would you like to create a new song?"
-      puts "Yes || No"
+      prompt = TTY::Prompt.new
+      input = prompt.select("Would you like to add another song?") do |menu_items|
+        menu_items.choice "Yes", "yes"
+        menu_items.choice "No", "no"
+      end
       input = gets.chomp.downcase
       if input == "yes"
         song_name = Song.add_song
@@ -72,8 +92,12 @@ class Song_In_Playlist < ActiveRecord::Base
     end
     Song_In_Playlist.find_or_create_by(playlist_id: playlist.id, song_id: song_name.id)
     puts "Your song has been successfully added!"
-    puts "Would you like to add another song? |Yes|No|"
-    input = gets.chomp.downcase
+    puts "---------------------------------------"
+    prompt = TTY::Prompt.new
+    input = prompt.select("Would you like to add another song?") do |menu_items|
+      menu_items.choice "Yes", "yes"
+      menu_items.choice "No", "no"
+    end
     if input == "yes"
       add_songs_to_playlist(playlist)
     else
