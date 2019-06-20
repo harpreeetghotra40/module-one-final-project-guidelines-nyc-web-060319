@@ -2,16 +2,26 @@ class Playlist < ActiveRecord::Base
   has_many :songs, through: :song_in_playlists
 
   def self.create_playlist
-    puts "Enter the name of your Playlist"
+    puts "\n"
+    puts "\n"
+    puts "Enter the name of your Playlist:"
+    puts "---------------------------------"
     playlist_name = gets.chomp
-    puts "Enter playlist description for #{playlist_name}"
+    puts "\n"
+    puts "Enter playlist description for #{playlist_name}:"
+    puts "--------------------------------------"
     playlist_desc = gets.chomp
     if Playlist.find_by(name: playlist_name) == nil
       new_playlist = Playlist.create(name: playlist_name, description: playlist_desc)
-      puts "Would you like to add songs to #{new_playlist.name} | Yes | | No |"
+      puts "\n"
+      puts "Would you like to add songs to #{new_playlist.name}?"
+      puts "--------------------------------------------"
+      puts "\n"
+      puts "| Yes | | No |"
       input = gets.chomp.downcase
       if input == 'yes'
         Song_In_Playlist.add_songs_to_playlist(new_playlist)
+        puts "----------------------------------------------------"
       else
         welcome
       end

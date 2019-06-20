@@ -11,6 +11,7 @@ end
 
 def welcome
   puts "----------------------------------------------------------------"
+  puts "\n"
   puts "|Create||View||Edit||Delete|-------- |exit|"
   puts "\n"
   input = gets.chomp.downcase
