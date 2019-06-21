@@ -30,6 +30,12 @@ class Playlist < ActiveRecord::Base
   end
 
   def self.delete_playlist
+    if Playlist.all.length == 0
+      puts "------------------------------------"
+      puts "There are no playlists in the database."
+      puts "------------------------------------"
+      welcome
+    end
     prompt = TTY::Prompt.new
     input = prompt.select("Select the playlist you want to delete.") do |menu_items|
       Playlist.all.each_with_index do |menu_item, index|
@@ -51,6 +57,12 @@ class Playlist < ActiveRecord::Base
   end
 
   def self.view_playlists
+    if Playlist.all.length == 0
+      puts "------------------------------------"
+      puts "There are no playlists in the database."
+      puts "------------------------------------"
+      welcome
+    end
     prompt = TTY::Prompt.new
     required_playlist = prompt.select("Which playlist would you like to view?\n", per_page: 10) do |menu_items|
       Playlist.all.each_with_index do |menu_item, index|

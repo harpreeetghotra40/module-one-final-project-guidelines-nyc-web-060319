@@ -24,6 +24,12 @@ class Song_In_Playlist < ActiveRecord::Base
   end
 
   def self.edit_playlist
+    if Playlist.all.length == 0
+      puts "------------------------------------"
+      puts "There are no playlists in the database."
+      puts "------------------------------------"
+      welcome
+    end
     prompt = TTY::Prompt.new
     required_playlist = prompt.select("Which playlist would you like to edit?") do |menu_items|
       Playlist.all.each_with_index do |menu_item, index|
